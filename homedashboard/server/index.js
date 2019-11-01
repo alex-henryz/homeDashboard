@@ -55,7 +55,3 @@ app.get('/api/getGameTitle', (req, res) => {
 app.listen(3001, () =>
   console.log('Server is running on localhost:3001')
 );
-
-/*axios.get("https://api.neoscan.io/api/main_net/v1/get_all_nodes")
-    .then(data => res.json(data))
-    .catch(err => next(err)); */

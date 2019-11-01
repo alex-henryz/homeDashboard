@@ -4,6 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
+homedashboard/server/apiconfig.json
 
 # testing
 /coverage
