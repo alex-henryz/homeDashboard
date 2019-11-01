@@ -31,8 +31,10 @@ app.get('/api/getOwnedGames', (req, res) => {
 });
 
 app.get('/api/getPlayedTime', (req, res) => {
-  let url = sprintf(STEAMURL, apiData.steam.key, MYID, 'GetRecentlyPlayed')
-
+  let url = sprintf(STEAMURL, apiData.steam.key, MYID, 'GetRecentlyPlayedGames')
+  axios.get(url)
+  .then(data => res.send(JSON.stringify(data.data.response.games)))
+  .catch(error => res.send(error))
 });
 
 app.get('/api/getGameImage', (req, res) => {
