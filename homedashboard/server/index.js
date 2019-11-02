@@ -15,6 +15,12 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(pino);
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 app.get('/api/greeting', (req, res) => {
   const name = req.query.name || 'World';
   res.setHeader('Content-Type', 'application/json');
@@ -31,6 +37,7 @@ app.get('/api/getOwnedGames', (req, res) => {
 });
 
 app.get('/api/getPlayedTime', (req, res) => {
+  res.setHeader('Content-Type', 'application/json', )
   let url = sprintf(STEAMURL, apiData.steam.key, MYID, 'GetRecentlyPlayedGames')
   axios.get(url)
   .then(data => res.send(JSON.stringify(data.data.response.games)))

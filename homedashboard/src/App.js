@@ -1,16 +1,22 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./components/Home"
-import About from "./components/Header"
-import Topics from "./components/Header"
+import Steam from "./components/SteamPlaytime"
 
 function App() {
   return (
     <Router>
       <div>
         <Header />
-        <Route exact path="/" component={Home} />
+        <Switch>
+          <Route exact path="/" component={Home}/>
+          <Route path="/steam" component={Steam}/>
+        </Switch>
       </div>
     </Router>
   );
