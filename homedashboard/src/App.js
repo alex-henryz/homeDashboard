@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./components/Home"
-import Steam from "./components/SteamPlaytime"
+import SteamPlaytime from './components/SteamPlaytime';
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
         <Header />
         <Switch>
           <Route exact path="/" component={Home}/>
-          <Route path="/steam" component={Steam}/>
+          <Route path="/steam" component={SteamPlaytime}/>
         </Switch>
       </div>
     </Router>

@@ -8,9 +8,12 @@
     "bootstrap": "^4.3.1",
     "concurrently": "^4.1.2",
     "npm-watch": "^0.6.0",
+    "pg": "^7.12.1",
+    "randomcolor": "^0.5.4",
     "react": "^16.9.0",
     "react-bootstrap": "^1.0.0-beta.12",
     "react-dom": "^16.9.0",
+    "react-minimal-pie-chart": "^5.0.2",
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.1",
@@ -18,7 +21,7 @@
     "sprintf-js": "^1.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set PORT=3000&&react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
