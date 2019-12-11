@@ -3,15 +3,8 @@ const bodyParser = require('body-parser');
 const pino = require('express-pino-logger')();
 const sprintf = require('sprintf-js').sprintf
 const axios = require('axios');
-const { Pool } = require ('pg')
-
-const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'api',
-  password: 'admin',
-  port: 5432,
-})
+const db = require('./queries');
+const cors = require('cors')
 
 const MYID = "76561198035272382"
 const STEAMURL = 'http://api.steampowered.com/IPlayerService/%3$s/v0001/?key=%1$s&steamid=%2$s'
@@ -19,9 +12,12 @@ const GAMEURL = 'http://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v0
 const IMAGEURL = 'https://steamcdn-a.akamaihd.net/steam/apps/%s/header.jpg'
 var apiData = require('./apiconfig.json')
 
+
+
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(pino);
+app.use(cors())
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
@@ -33,17 +29,8 @@ app.use(function(req, res, next) {
 
 
 //POSTGRES DATABASE ROUTES
-
-app.get('/api/getTodoData'), (req, res) => {
-  pool.query('SELECT * FROM todo', (error, result) => {
-    if (error){
-      throw error
-    }
-    console.log(result.rows)
-    res.send("hello")
-  })
-}
-
+app.get('/api/getTodoData', db.getTodoData)
+app.post('/api/getTodoData', db.createTodo)
 
 
 //STEAM API ROUTES
@@ -93,6 +80,6 @@ app.get('/api/getGameTitle', (req, res) => {
   .catch(error => res.send(error))
 });
 
-app.listen(3001, () =>
-  console.log('Server is running on localhost:3001')
+app.listen(3001, '0.0.0.0', () =>
+  console.log('Server is running on 0.0.0.0:3001')
 );

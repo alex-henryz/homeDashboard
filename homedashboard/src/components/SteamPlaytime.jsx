@@ -6,22 +6,17 @@ import randomcolor from 'randomcolor'
 
 
 const styles = {
-    body: {
-        overflowX: "hidden",
-        overflowY: "hidden"
-    },
-
-    root: {
+    gridroot: {
         flexGrow: 1,
         marginTop: 4,
+    },
+    griditems: {
+        
         marginLeft: 2,
-        width: "vw - 8px"
+        
     },
     PieChart: {
         height: 250
-    },
-    border: {
-        borderWidth: 5
     }
 }
 
@@ -53,8 +48,10 @@ export default class SteamPlaytime extends Component {
                 playtime = this.state.gameTime[i].playtime_2weeks
                 unit = "min"
             }
+            
             let img = `https://steamcdn-a.akamaihd.net/steam/apps/${JSON.stringify(this.state.gameTime[i].appid)}/header.jpg`
-            games.push({name: this.state.gameTime[i].name, gameTime: playtime, imageUrl: img, unit: unit})
+            let mobImg = `https://steamcdn-a.akamaihd.net/steamcommunity/public/images/apps/${JSON.stringify(this.state.gameTime[i].appid)}/${this.state.gameTime[i].img_logo_url}.jpg`
+            games.push({name: this.state.gameTime[i].name, gameTime: playtime, imageUrl: img, mobileUrl: mobImg, unit: unit})
             this.setState({totalTime: Number(((this.state.gameTime[i].playtime_2weeks/60)+this.state.totalTime).toFixed(1))})
         }
         this.setState({games: games})
@@ -66,7 +63,6 @@ export default class SteamPlaytime extends Component {
         axios.get("http://localhost:3001/api/getPlayedTime")
         .then(data => {
             this.setState({gameTime: data.data})
-            this.getGameBanners(this.state.gameTime)
             this.getFullData()
         })
         .catch(err => console.log(err))
@@ -92,19 +88,13 @@ export default class SteamPlaytime extends Component {
         console.log(this.state.hovered)
     }
 
-    getGameBanners(arr){
-        let imgArr = []
-        if(arr.length < 9){
-            for(let i=0; i < arr.length; i++){
-                imgArr.push(`https://steamcdn-a.akamaihd.net/steam/apps/${JSON.stringify(arr[i].appid)}/header.jpg`)
-            }
-        }
-        this.setState({images: imgArr})
+    checkWindowsize(i){
+        return(window.innerWidth >= 650 ? this.state.games[i].imageUrl : this.state.games[i].mobileUrl) 
     }
 
     render() {
         return (
-            <div style={styles.body}>
+            <div style={{marginTop: 60}}>
                 <h3>Total Time: {this.state.totalTime}h</h3>
                 <Button to="/allgames">View All Steam Games</Button>
                 <PieChart
@@ -128,18 +118,19 @@ export default class SteamPlaytime extends Component {
                     onMouseOut={undefined}
                     onMouseOver={undefined}
                     paddingAngle={18}
-                    radius={50}
                     ratio={1}
                     rounded
                     startAngle={0}
                 ></PieChart>
-                <Grid container spacing={1} style={styles.root} justify="space-between">
-                    {this.state.games.map((item, i) => 
-                    <Grid item xs={3}>
-                        <img key={i} src={item.imageUrl} style={{borderStyle: "solid",borderWidth: 3, borderColor: this.state.colors[i]}} alt={i} onClick={()=>this.getGameData(this.state.games[i])}></img>
-                        <Typography>{item.name}: {item.gameTime+item.unit}</Typography>
-                    </Grid>)}
-                </Grid>
+                <div style={{width: '100%'}}>
+                    <Grid container style={styles.gridroot} spacing={2} alignContent="center" justify="center" wrap={"wrap"}>
+                        {this.state.games.map((item, i) => 
+                        <Grid container item xs={3} key={i}>
+                            <img key={i+"a"} src={item.imageUrl} style={{borderStyle: "solid",borderWidth: 3, borderColor: this.state.colors[i], maxWidth: "85%", margin: 'auto'}} alt={i}></img>
+                            <Typography key={i+"b"} style={{margin: 'auto', fontSize: '1vw'}}>{item.name}: {item.gameTime+item.unit}</Typography>
+                        </Grid>)}
+                    </Grid>
+                </div>
             </div>
         )
     }

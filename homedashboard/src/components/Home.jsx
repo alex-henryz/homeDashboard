@@ -6,7 +6,10 @@ export default class Home extends Component {
         return (
             <div>
                 <h1>Home</h1>
-                <Link to="/steam">Steam</Link>
+                <ul>
+                    <li><Link to="/steam">Steam</Link></li>
+                    <li><Link to="/todo">Todo</Link></li>
+                </ul>
             </div>
         )
     }

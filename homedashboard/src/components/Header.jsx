@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 const styles = {
     root: {
-        "flexGrow": 1
+        "flexGrow": 1,
     },
     title: {
         "flexGrow": 1
@@ -29,7 +29,7 @@ export default class Header extends Component {
     render() {
         return (
             <div style={styles.root}>
-                <AppBar position="static" isOpen>
+                <AppBar position="fixed" isOpen>
                 <Drawer open={this.state.menuOpen} onClose={()=> this.toggleDrawer(false)}>
                     <List style={styles.drawer}>
                     {this.state.links.map((obj,i) =>
