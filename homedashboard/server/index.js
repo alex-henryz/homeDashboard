@@ -31,6 +31,7 @@ app.use(function(req, res, next) {
 //POSTGRES DATABASE ROUTES
 app.get('/api/getTodoData', db.getTodoData)
 app.post('/api/getTodoData', db.createTodo)
+app.put('/api/updateTodoData/:id', db.updateTodo)
 
 
 //STEAM API ROUTES

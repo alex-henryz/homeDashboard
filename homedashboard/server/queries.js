@@ -42,8 +42,27 @@ const deleteTodo = (req, res) =>{
       })
 }
 
+const updateTodo = (req, res) => {
+  const id = parseInt(request.params.id)
+  const { checked } = request.body
+  console.log(checked, id)
+  pool.query(
+    'UPDATE todo SET completed = $1 WHERE id = $2',
+    [checked,  id],
+    (error, results) => {
+      if (error) {
+        console.log(id, checked)
+        throw error
+      }
+      console.log(id, checked)
+      response.status(200).send(`User modified with ID: ${id}`)
+    }
+  )
+}
+
 module.exports = {
     getTodoData,
     createTodo,
-    deleteTodo
+    deleteTodo,
+    updateTodo
   }

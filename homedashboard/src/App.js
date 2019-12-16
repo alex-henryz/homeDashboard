@@ -12,7 +12,8 @@ import Todo from './components/Todo';
 const styles = {
   root: {
     overflowX: "hidden",
-    overflowY: "hidden"
+    overflowY: "hidden",
+    marginTop: 60
   }
 }
 

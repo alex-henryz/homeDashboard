@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Grid, Card, Checkbox } from '@material-ui/core'
+import { Grid, Card, Checkbox, Button } from '@material-ui/core'
 
 
 const URL = "http://localhost:3001/api/"
@@ -59,26 +59,40 @@ export default class Todo extends Component {
         })
     }
 
-    updateTodoData(){
-        
+    updateTodoData(id, index){
+        let checkedState = ""
+        const newItems = [...this.state.checked]
+        if(this.state.checked[index] === true){
+            newItems[index] = false
+        }else{
+            newItems[index] = true
+        }
+        this.setState({checked: newItems})
     }
 
 
     checkBox(index){
+        let checked;
         if(this.state.checked[index]){
-            return(<Checkbox checked={true}></Checkbox>)
+            checked = true
         }else{
-            return(<Checkbox checked={false}></Checkbox>)
+            checked = false
         }
+        return(<Checkbox checked={checked} onClick={() => this.updateTodoData(this.state.todoData[index].id, index)}></Checkbox>)
+    }
+
+    saveChanges(){
+        console.log("hello")
     }
 
     render() {
         return (
             <div>
+                <Button onClick={() => this.saveChanges()}>Save</Button>
                 <Grid container spacing={1} style={styles.todoCards} justify="center" alignItems="center" alignContent="center">
                     {this.state.todoData.map((item, i) => (
                         <Grid item xs={3} key={i+"a"}>
-                            <Card>
+                            <Card >
                                 <div key={i}>
                                     <h1>{item.title}</h1>
                                     <p>{item.description}</p>

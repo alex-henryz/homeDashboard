@@ -8,7 +8,6 @@ import randomcolor from 'randomcolor'
 const styles = {
     gridroot: {
         flexGrow: 1,
-        marginTop: 4,
     },
     griditems: {
         
@@ -94,7 +93,7 @@ export default class SteamPlaytime extends Component {
 
     render() {
         return (
-            <div style={{marginTop: 60}}>
+            <div>
                 <h3>Total Time: {this.state.totalTime}h</h3>
                 <Button to="/allgames">View All Steam Games</Button>
                 <PieChart
